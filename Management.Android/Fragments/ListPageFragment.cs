@@ -5,12 +5,12 @@ using Android.Widget;
 
 namespace Management.Android.Fragments
 {
-    public class HomeFragment : Fragment
+    public class ListPageFragment : Fragment
     {
 
         private readonly string _textContext;
 
-        public HomeFragment(string textContext = null)
+        public ListPageFragment(string textContext = default)
         {
             _textContext = textContext;
         }
@@ -27,7 +27,7 @@ namespace Management.Android.Fragments
             // Use this to return your custom view for this Fragment
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
-            var view = inflater.Inflate(Resource.Layout.fragment_home, container, false);
+            var view = inflater.Inflate(Resource.Layout.fragment_list_page, container, false);
 
             if (!string.IsNullOrWhiteSpace(_textContext))
             {

@@ -19,9 +19,16 @@ namespace Management.Android
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
 
+        private HomeFragment _homeFragment;
+        private MineFragment _mineFragment;
+        private ListPageFragment _listPageFragment;
 
-
-
+        private void Init()
+        {
+            _homeFragment = new HomeFragment();
+            _mineFragment = new MineFragment();
+            _listPageFragment = new ListPageFragment();
+        }
 
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -42,12 +49,15 @@ namespace Management.Android
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
+
+            Init();
+
         }
 
         public override void OnBackPressed()
         {
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            if(drawer.IsDrawerOpen(GravityCompat.Start))
+            if (drawer.IsDrawerOpen(GravityCompat.Start))
             {
                 drawer.CloseDrawer(GravityCompat.Start);
             }
@@ -76,32 +86,30 @@ namespace Management.Android
 
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
-            View view = (View) sender;
+            View view = (View)sender;
             Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
                 .SetAction("Action", (IOnClickListener)null).Show();
         }
+
+
 
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             FragmentTransaction fTransaction = FragmentManager.BeginTransaction();
 
-
-
             int id = item.ItemId;
             if (id == Resource.Id.nav_camera)
             {
-
-                HomeFragment home = new HomeFragment("首页");
                 // Handle the camera action
-                fTransaction.Add(Resource.Id.main_frame_layout, home);
+                fTransaction.Replace(Resource.Id.main_frame_layout, _homeFragment).Commit();
             }
             else if (id == Resource.Id.nav_gallery)
             {
-
+                fTransaction.Replace(Resource.Id.main_frame_layout, _mineFragment).Commit();
             }
             else if (id == Resource.Id.nav_slideshow)
             {
-
+                fTransaction.Replace(Resource.Id.main_frame_layout, _listPageFragment).Commit();
             }
             else if (id == Resource.Id.nav_manage)
             {
@@ -116,8 +124,7 @@ namespace Management.Android
 
             }
 
-            fTransaction.Commit();
-
+            //_fTransaction.Commit();
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.CloseDrawer(GravityCompat.Start);
             return true;

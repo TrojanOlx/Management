@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/text_view"
-        android:text="Home" 
+        android:text="Mine"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
