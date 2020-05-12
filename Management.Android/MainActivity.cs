@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
@@ -35,6 +37,9 @@ namespace Management.Android
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
+            
+
             SetContentView(Resource.Layout.activity_main);
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
@@ -49,10 +54,10 @@ namespace Management.Android
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
-
+            
             Init();
-
         }
+
 
         public override void OnBackPressed()
         {
@@ -96,10 +101,11 @@ namespace Management.Android
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             FragmentTransaction fTransaction = FragmentManager.BeginTransaction();
-
+            
             int id = item.ItemId;
             if (id == Resource.Id.nav_camera)
             {
+                
                 // Handle the camera action
                 fTransaction.Replace(Resource.Id.main_frame_layout, _homeFragment).Commit();
             }

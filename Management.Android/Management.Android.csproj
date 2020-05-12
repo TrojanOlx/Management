@@ -65,9 +65,6 @@
     <Compile Include="Fragments\ListPageFragment.cs" />
     <Compile Include="Fragments\MineFragment.cs" />
     <Compile Include="Fragments\HomeFragment.cs" />
-    <Compile Include="Fragments\PlayQuoteFragment.cs" />
-    <Compile Include="Fragments\Shakespeare.cs" />
-    <Compile Include="Fragments\TitlesFragment.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +141,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_list_page.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\list_item.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

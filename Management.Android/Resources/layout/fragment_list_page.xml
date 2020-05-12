@@ -7,14 +7,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:id="@+id/text_view"
-        android:text="List Page"
+    <ListView
+        android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:background="#ffffff"
-        />
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
