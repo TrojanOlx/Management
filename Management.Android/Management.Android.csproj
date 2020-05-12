@@ -65,6 +65,9 @@
     <Compile Include="Fragments\ListPageFragment.cs" />
     <Compile Include="Fragments\MineFragment.cs" />
     <Compile Include="Fragments\HomeFragment.cs" />
+    <Compile Include="Fragments\PlayQuoteFragment.cs" />
+    <Compile Include="Fragments\Shakespeare.cs" />
+    <Compile Include="Fragments\TitlesFragment.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
