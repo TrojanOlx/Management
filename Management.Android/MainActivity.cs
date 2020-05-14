@@ -105,16 +105,18 @@ namespace Management.Android
             int id = item.ItemId;
             if (id == Resource.Id.nav_camera)
             {
-                
+                this.Title = "首页";
                 // Handle the camera action
                 fTransaction.Replace(Resource.Id.main_frame_layout, _homeFragment).Commit();
             }
             else if (id == Resource.Id.nav_gallery)
             {
+                this.Title = "我的";
                 fTransaction.Replace(Resource.Id.main_frame_layout, _mineFragment).Commit();
             }
             else if (id == Resource.Id.nav_slideshow)
             {
+                this.Title = "列表";
                 fTransaction.Replace(Resource.Id.main_frame_layout, _listPageFragment).Commit();
             }
             else if (id == Resource.Id.nav_manage)
