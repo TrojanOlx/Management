@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="220"/>
+            <RowDefinition />
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackLayout Orientation="Horizontal">
@@ -22,7 +22,27 @@
                     BackgroundColor="Transparent" TextColor="Blue"
                     HorizontalOptions="EndAndExpand" WidthRequest="50" Margin="5,0,5,0"/>
         </StackLayout>
-        
+
+        <ListView Grid.Row="1" ItemsSource="{Binding MenuModels}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding IconFont}" FontFamily="iconfont.ttf#" VerticalOptions="Center" FontSize="22" FontAttributes="Bold"/>
+                                <Label Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center" />
+                            </StackLayout>
+                            <Label Grid.Column="1" VerticalOptions="Center" Text="{Binding TaskInfos.Count}" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         
     </Grid>
 
