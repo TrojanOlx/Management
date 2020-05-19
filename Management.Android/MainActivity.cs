@@ -25,11 +25,14 @@ namespace Management.Android
         private MineFragment _mineFragment;
         private ListPageFragment _listPageFragment;
 
+        private RecyclerViewFragment _recyclerViewFragment;
+
         private void Init()
         {
             _homeFragment = new HomeFragment();
             _mineFragment = new MineFragment();
             _listPageFragment = new ListPageFragment();
+            _recyclerViewFragment = new RecyclerViewFragment();
         }
 
 
@@ -121,7 +124,8 @@ namespace Management.Android
             }
             else if (id == Resource.Id.nav_manage)
             {
-
+                this.Title = "CardView";
+                fTransaction.Replace(Resource.Id.main_frame_layout, _recyclerViewFragment).Commit();
             }
             else if (id == Resource.Id.nav_share)
             {
