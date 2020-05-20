@@ -54,7 +54,6 @@ namespace Management.Android.Fragments
 
         private void OnClick(int position)
         {
-            Toast.MakeText(context, "", ToastLength.Long).Show();
             if (ItemClick != null)
                 ItemClick(this, position);
         }

@@ -20,7 +20,7 @@ namespace Management.Android.Fragments
         PhotoAlbumAdapter mAdapter;
         RecyclerView recyclerView;
 
-        RecyclerView.LayoutManager mLayoutManager;
+        GridLayoutManager manager;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -33,10 +33,7 @@ namespace Management.Android.Fragments
 
             recyclerView = view.FindViewById<RecyclerView>(Resource.Id.recyclerView);
 
-            GridLayoutManager manager = new GridLayoutManager(this.Context,2);
-
-            //mLayoutManager = new LinearLayoutManager(this.Context);
-
+            manager = new GridLayoutManager(this.Context,2);
 
             recyclerView.SetLayoutManager(manager);
 
