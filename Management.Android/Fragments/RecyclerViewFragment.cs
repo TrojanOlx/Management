@@ -33,10 +33,12 @@ namespace Management.Android.Fragments
 
             recyclerView = view.FindViewById<RecyclerView>(Resource.Id.recyclerView);
 
+            GridLayoutManager manager = new GridLayoutManager(this.Context,2);
 
-            mLayoutManager = new LinearLayoutManager(this.Context);
+            //mLayoutManager = new LinearLayoutManager(this.Context);
 
-            recyclerView.SetLayoutManager(mLayoutManager);
+
+            recyclerView.SetLayoutManager(manager);
 
             var mPhotoAlbum = new PhotoAlbum();
 
