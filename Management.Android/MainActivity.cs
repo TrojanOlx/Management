@@ -12,8 +12,11 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Widget;
 using Management.Android.Fragments;
+using Management.Android.Models;
 using static Android.Views.View;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace Management.Android
 {
@@ -24,8 +27,12 @@ namespace Management.Android
         private HomeFragment _homeFragment;
         private MineFragment _mineFragment;
         private ListPageFragment _listPageFragment;
-
         private RecyclerViewFragment _recyclerViewFragment;
+
+
+        private PhotoAlbum mPhotoAlbum;
+        private PhotoAlbumAdapter mAdapter;
+        private SwipeRefreshLayout swipeRefreshLayout;
 
         private void Init()
         {
@@ -57,8 +64,50 @@ namespace Management.Android
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
-            
+
+
+            #region RecyclerView
+            var recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView_main);
+
+            var manager = new GridLayoutManager(this, 2);
+
+            recyclerView.SetLayoutManager(manager);
+
+            mPhotoAlbum = new PhotoAlbum();
+
+            mAdapter = new PhotoAlbumAdapter(mPhotoAlbum);
+
+            mAdapter.ItemClick += OnItemClick;
+
+            recyclerView.SetAdapter(mAdapter);
+            #endregion
+
+
+            swipeRefreshLayout = FindViewById<SwipeRefreshLayout>(Resource.Id.switch_refresh);
+            swipeRefreshLayout.SetColorSchemeColors(Resource.Color.colorPrimary);
+            swipeRefreshLayout.Refresh += SwipeRefreshLayout_Refresh;
+
+
+
+
             Init();
+        }
+
+        private void SwipeRefreshLayout_Refresh(object sender, EventArgs e)
+        {
+            int idx = mPhotoAlbum.RandomSwap();
+
+            mAdapter.NotifyItemChanged(0);
+            mAdapter.NotifyItemChanged(idx);
+
+            swipeRefreshLayout.Refreshing = false;
+        }
+
+        void OnItemClick(object sender, int position)
+        {
+            // Display a toast that briefly shows the enumeration of the selected photo:
+            int photoNum = position + 1;
+            Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
         }
 
 
@@ -110,22 +159,22 @@ namespace Management.Android
             {
                 this.Title = "首页";
                 // Handle the camera action
-                fTransaction.Replace(Resource.Id.main_frame_layout, _homeFragment).Commit();
+                //fTransaction.Replace(Resource.Id.main_frame_layout, _homeFragment).Commit();
             }
             else if (id == Resource.Id.nav_gallery)
             {
                 this.Title = "我的";
-                fTransaction.Replace(Resource.Id.main_frame_layout, _mineFragment).Commit();
+                //fTransaction.Replace(Resource.Id.main_frame_layout, _mineFragment).Commit();
             }
             else if (id == Resource.Id.nav_slideshow)
             {
                 this.Title = "列表";
-                fTransaction.Replace(Resource.Id.main_frame_layout, _listPageFragment).Commit();
+                //fTransaction.Replace(Resource.Id.main_frame_layout, _listPageFragment).Commit();
             }
             else if (id == Resource.Id.nav_manage)
             {
                 this.Title = "CardView";
-                fTransaction.Replace(Resource.Id.main_frame_layout, _recyclerViewFragment).Commit();
+                //fTransaction.Replace(Resource.Id.main_frame_layout, _recyclerViewFragment).Commit();
             }
             else if (id == Resource.Id.nav_share)
             {
