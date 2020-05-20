@@ -35,8 +35,8 @@ namespace Management.Android.Models
         // a photo database:
 
         static Photo[] mBuiltInPhotos = {
-            new Photo ( Resource.Drawable.buckingham_guards,
-                        "Buckingham Palace" ),
+            //new Photo ( Resource.Drawable.buckingham_guards,
+            //            "Buckingham Palace" ),
             new Photo ( Resource.Drawable.la_tour_eiffel,
                         "The Eiffel Tower" ),
             new Photo ( Resource.Drawable.louvre_1,
