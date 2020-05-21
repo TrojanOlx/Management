@@ -15,6 +15,7 @@ using Android.Views;
 using Android.Widget;
 using Management.Android.Fragments;
 using Management.Android.Models;
+using Management.Android.UI;
 using static Android.Views.View;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
@@ -51,16 +52,17 @@ namespace Management.Android
             
 
             SetContentView(Resource.Layout.activity_main);
-            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
+
+            //var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            //SetSupportActionBar(toolbar);
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
 
-            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
-            drawer.AddDrawerListener(toggle);
-            toggle.SyncState();
+            //DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            //drawer.AddDrawerListener(toggle);
+            //toggle.SyncState();
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
@@ -87,10 +89,18 @@ namespace Management.Android
             swipeRefreshLayout.SetColorSchemeColors(Resource.Color.colorPrimary);
             swipeRefreshLayout.Refresh += SwipeRefreshLayout_Refresh;
 
-
+            var imagebutton = FindViewById<RoundImageView>(Resource.Id.iv_userphoto_mycenter_myprofile);
+            imagebutton.Click += Imagebutton_Click;
 
 
             Init();
+        }
+
+        private void Imagebutton_Click(object sender, EventArgs e)
+        {
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            drawer.OpenDrawer(GravityCompat.Start);
+            Toast.MakeText(this, "clik imageButton", ToastLength.Long).Show();
         }
 
         private void SwipeRefreshLayout_Refresh(object sender, EventArgs e)

@@ -17,7 +17,18 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"/>
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+
+            <Management.Android.UI.RoundImageView
+                android:src="@drawable/portrait"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/iv_userphoto_mycenter_myprofile"
+                android:layout_width="35dp"
+                android:gravity="center_horizontal"/>
+            
+        </android.support.v7.widget.Toolbar>
+
 
     </android.support.design.widget.AppBarLayout>
 
