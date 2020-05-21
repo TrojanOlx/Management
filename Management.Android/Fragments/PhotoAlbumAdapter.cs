@@ -78,6 +78,11 @@ namespace Management.Android.Fragments
         }
     }
 
+    public class RecyclerViewOnScrollListtener : RecyclerView.OnScrollListener { 
+        
+        
+    }
+
 
 
 }
