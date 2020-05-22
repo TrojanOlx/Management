@@ -86,6 +86,13 @@ namespace Management.Android
             mAdapter.ItemClick += OnItemClick;
 
             recyclerView.SetAdapter(mAdapter);
+
+
+            // :TODO 
+            //RecyclerViewOnScrollListtener
+
+
+
             #endregion
 
 

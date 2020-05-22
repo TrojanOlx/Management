@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -35,11 +36,24 @@ namespace Management.Android.Fragments
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            context = parent.Context;
-            View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PhotoCardView, parent, false);
 
-            PhotoViewHolder photoViewHolder = new PhotoViewHolder(itemView, OnClick);
-            return photoViewHolder;
+            // TODO: 
+            if (viewType == VIEW_ITEM)
+            {
+                context = parent.Context;
+                View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PhotoCardView, parent, false);
+
+                PhotoViewHolder photoViewHolder = new PhotoViewHolder(itemView, OnClick);
+                return photoViewHolder;
+            }
+            else if (viewType == (int)VIEW_FOOTER)
+            {
+                View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.item_recyclerView_foot, parent, false);
+                PhotoViewHolder photoViewHolder = new PhotoViewHolder(itemView, OnClick);
+                return photoViewHolder;
+            }
+            return null;
+
         }
 
 
@@ -50,6 +64,20 @@ namespace Management.Android.Fragments
             photoViewHolder.Image.SetImageResource(mPhotoAlbum[position].PhotoID);
             photoViewHolder.Caption.Text = mPhotoAlbum[position].Caption;
         }
+
+
+        private const int VIEW_ITEM = 0;
+        private const int VIEW_FOOTER = 1;
+
+        public override int GetItemViewType(int position)
+        {
+
+            if (position + 1 == ItemCount)
+                return VIEW_FOOTER;
+            return VIEW_ITEM;
+        }
+
+
 
 
         private void OnClick(int position)
@@ -78,9 +106,73 @@ namespace Management.Android.Fragments
         }
     }
 
-    public class RecyclerViewOnScrollListtener : RecyclerView.OnScrollListener { 
-        
-        
+    public class RecyclerViewOnScrollListtener : RecyclerView.OnScrollListener
+    {
+        private readonly SwipeRefreshLayout swipeRefreshLayout;
+        private readonly Handler handle;
+        private readonly GridLayoutManager gridLayoutManager;
+        private readonly PhotoAlbumAdapter photoAlbumAdapter;
+
+        private readonly InsertData insertDataEvent;//加載更多的事件
+        private bool isLoadingMore;
+
+        public delegate void InsertData();//添加更多數據的委托
+
+
+        public RecyclerViewOnScrollListtener(SwipeRefreshLayout swipeRefreshLayout,
+            Handler handle,
+            GridLayoutManager gridLayoutManager,//布局管理器
+            PhotoAlbumAdapter photoAlbumAdapter, // 适配器
+            InsertData InsertDataEvent,
+            bool IsLoadingMore)
+        {
+            this.swipeRefreshLayout = swipeRefreshLayout;
+            this.handle = handle;
+            this.gridLayoutManager = gridLayoutManager;
+            this.photoAlbumAdapter = photoAlbumAdapter;
+            insertDataEvent = InsertDataEvent;
+            isLoadingMore = IsLoadingMore;
+        }
+
+
+        public override void OnScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
+            base.OnScrollStateChanged(recyclerView, newState);
+            System.Diagnostics.Debug.Write("test", "newState" + newState);
+        }
+
+
+        public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)
+        {
+            base.OnScrolled(recyclerView, dx, dy);
+            System.Diagnostics.Debug.Write("正在滑動");
+            int lastVisibleItemPosition = gridLayoutManager.FindLastVisibleItemPosition();
+
+            if (lastVisibleItemPosition + 1 == photoAlbumAdapter.ItemCount)
+            {
+                System.Diagnostics.Debug.Write("test", "loadding已經完成");
+                bool isRefreshing = swipeRefreshLayout.Refreshing;
+                if (isRefreshing)
+                {
+                    photoAlbumAdapter.NotifyItemRemoved(photoAlbumAdapter.ItemCount);
+                    return;
+                }
+                if (!isLoadingMore)
+                {
+                    isLoadingMore = true;
+
+                    handle.PostDelayed(() =>
+                    {
+                        insertDataEvent();
+                        System.Diagnostics.Debug.Write("test", "加載more已經完成");
+                        isLoadingMore = false;
+                    }, 3000);
+                }
+            }
+
+        }
+
+
     }
 
 
