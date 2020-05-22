@@ -27,6 +27,11 @@
                 android:layout_width="35dp"
                 android:gravity="center_horizontal"/>
             
+            <android.support.v7.widget.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconifiedByDefault="false"
+                app:queryHint="@string/abc_search_hint"/>
         </android.support.v7.widget.Toolbar>
 
 

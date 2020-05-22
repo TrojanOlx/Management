@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Net;
 using System.Text.RegularExpressions;
 using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -18,6 +20,7 @@ using Management.Android.Models;
 using Management.Android.UI;
 using static Android.Views.View;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Uri = Android.Net.Uri;
 
 namespace Management.Android
 {
@@ -34,6 +37,7 @@ namespace Management.Android
         private PhotoAlbum mPhotoAlbum;
         private PhotoAlbumAdapter mAdapter;
         private SwipeRefreshLayout swipeRefreshLayout;
+        private RoundImageView imagebutton;
 
         private void Init()
         {
@@ -92,6 +96,8 @@ namespace Management.Android
             var imagebutton = FindViewById<RoundImageView>(Resource.Id.iv_userphoto_mycenter_myprofile);
             imagebutton.Click += Imagebutton_Click;
 
+            var imageBitmap = GetImageBitmapFromUrl("https://avatar.csdnimg.cn/A/4/F/3_kgcourage.jpg");
+            imagebutton.SetImageBitmap(imageBitmap);
 
             Init();
         }
@@ -100,7 +106,25 @@ namespace Management.Android
         {
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.OpenDrawer(GravityCompat.Start);
+
             Toast.MakeText(this, "clik imageButton", ToastLength.Long).Show();
+        }
+
+
+        private Bitmap GetImageBitmapFromUrl(string url)
+        {
+            Bitmap imageBitmap = null;
+
+            using (var webClient = new WebClient())
+            {
+                var imageBytes = webClient.DownloadData(url);
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                }
+            }
+
+            return imageBitmap;
         }
 
         private void SwipeRefreshLayout_Refresh(object sender, EventArgs e)
