@@ -100,9 +100,15 @@ namespace Management.Android.Fragments
 
             if ((visibleItemCount + pastVisiblesItems) >= totalItemCount)
             {
-                LoadMoreEvent();
+                Handler handler = new Handler();
+                handler.Post(StartAction);
             }
 
+        }
+
+        private void StartAction()
+        {
+            LoadMoreEvent();
         }
     }
 

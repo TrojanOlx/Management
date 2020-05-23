@@ -54,7 +54,7 @@ namespace Management.Android
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
-            
+
 
             SetContentView(Resource.Layout.activity_main);
 
@@ -89,7 +89,7 @@ namespace Management.Android
             recyclerView.SetAdapter(mAdapter);
 
 
-            recyclerView.AddOnScrollListener(new RecyclerViewOnScrollListtener(AddList,manager));
+            recyclerView.AddOnScrollListener(new RecyclerViewOnScrollListtener(AddList, manager));
 
             #endregion
 
@@ -98,14 +98,26 @@ namespace Management.Android
             swipeRefreshLayout.SetColorSchemeColors(Resource.Color.colorPrimary);
             swipeRefreshLayout.Refresh += SwipeRefreshLayout_Refresh;
 
-            var imagebutton = FindViewById<RoundImageView>(Resource.Id.iv_userphoto_mycenter_myprofile);
+            imagebutton = FindViewById<RoundImageView>(Resource.Id.iv_userphoto_mycenter_myprofile);
             imagebutton.Click += Imagebutton_Click;
 
-            var imageBitmap = GetImageBitmapFromUrl("https://avatar.csdnimg.cn/A/4/F/3_kgcourage.jpg");
-            imagebutton.SetImageBitmap(imageBitmap);
+            Handler handler = new Handler();
+            handler.Post(SetImage);
 
+            
             Init();
         }
+
+
+        private void SetImage()
+        {
+            var imageBitmap = GetImageBitmapFromUrl("https://avatar.csdnimg.cn/A/4/F/3_kgcourage.jpg");
+            imagebutton.SetImageBitmap(imageBitmap);
+        }
+
+
+        
+
 
 
         private void AddList()
@@ -122,12 +134,10 @@ namespace Management.Android
         {
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.OpenDrawer(GravityCompat.Start);
-
-            Toast.MakeText(this, "clik imageButton", ToastLength.Long).Show();
         }
 
 
-        private Bitmap GetImageBitmapFromUrl(string url)
+        private static Bitmap GetImageBitmapFromUrl(string url)
         {
             Bitmap imageBitmap = null;
 
@@ -204,7 +214,7 @@ namespace Management.Android
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             FragmentTransaction fTransaction = FragmentManager.BeginTransaction();
-            
+
             int id = item.ItemId;
             if (id == Resource.Id.nav_camera)
             {
