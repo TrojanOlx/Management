@@ -149,7 +149,7 @@ namespace Management.Android.Models
             mPhotos[0] = mPhotos[rnd];
             mPhotos[rnd] = tmpPhoto;
 
-            mPhotos = mPhotos.OrderBy(q => Guid.NewGuid()).Take(10).ToArray();
+            mPhotos = mBuiltInPhotos.OrderBy(q => Guid.NewGuid()).Take(10).ToArray();
             // Return the index of which photo was swapped with the top:
             return rnd;
         }
@@ -171,6 +171,15 @@ namespace Management.Android.Models
                 mPhotos[idx] = mPhotos[rnd];
                 mPhotos[rnd] = tmpPhoto;
             }
+        }
+
+        public void AddData()
+        {
+            var list = mPhotos.ToList();
+
+            list.AddRange(mBuiltInPhotos.OrderBy(q => Guid.NewGuid()).Take(10).ToArray());
+
+            mPhotos = list.ToArray();
         }
     }
 }

@@ -15,6 +15,7 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using Java.Lang;
 using Management.Android.Fragments;
 using Management.Android.Models;
 using Management.Android.UI;
@@ -86,6 +87,10 @@ namespace Management.Android
             mAdapter.ItemClick += OnItemClick;
 
             recyclerView.SetAdapter(mAdapter);
+
+
+            recyclerView.AddOnScrollListener(new RecyclerViewOnScrollListtener(AddList,manager));
+
             #endregion
 
 
@@ -100,6 +105,17 @@ namespace Management.Android
             imagebutton.SetImageBitmap(imageBitmap);
 
             Init();
+        }
+
+
+        private void AddList()
+        {
+            //Thread.Sleep(2000);
+            mPhotoAlbum.AddData();
+            mAdapter.NotifyDataSetChanged();
+            swipeRefreshLayout.Refreshing = false;
+            //mAdapter.NotifyItemRemoved(mAdapter.ItemCount);
+
         }
 
         private void Imagebutton_Click(object sender, EventArgs e)
@@ -129,11 +145,12 @@ namespace Management.Android
 
         private void SwipeRefreshLayout_Refresh(object sender, EventArgs e)
         {
+
+            mAdapter.NotifyItemRemoved(mAdapter.ItemCount);
             int idx = mPhotoAlbum.RandomSwap();
-
-            mAdapter.NotifyItemChanged(0);
-            mAdapter.NotifyItemChanged(idx);
-
+            //mAdapter.NotifyItemChanged(0);
+            //mAdapter.NotifyItemChanged(idx);
+            mAdapter.NotifyDataSetChanged();
             swipeRefreshLayout.Refreshing = false;
         }
 
