@@ -119,7 +119,7 @@ namespace Management.Android.Models
         // create the random number generator:
         public PhotoAlbum()
         {
-            mPhotos = mBuiltInPhotos.Take(10).ToArray();
+            mPhotos = mBuiltInPhotos.Take(10).Append(null).ToArray();
             mRandom = new Random();
         }
 
@@ -149,7 +149,8 @@ namespace Management.Android.Models
             mPhotos[0] = mPhotos[rnd];
             mPhotos[rnd] = tmpPhoto;
 
-            mPhotos = mBuiltInPhotos.OrderBy(q => Guid.NewGuid()).Take(10).ToArray();
+            mPhotos = mBuiltInPhotos.OrderBy(q => Guid.NewGuid()).Take(10).Append(null).ToArray();
+            
             // Return the index of which photo was swapped with the top:
             return rnd;
         }
@@ -176,9 +177,8 @@ namespace Management.Android.Models
         public void AddData()
         {
             var list = mPhotos.ToList();
-
-            list.AddRange(mBuiltInPhotos.OrderBy(q => Guid.NewGuid()).Take(10).ToArray());
-
+            list.Remove(list.LastOrDefault());
+            list.AddRange(mBuiltInPhotos.OrderBy(q => Guid.NewGuid()).Take(10).Append(null).ToArray());
             mPhotos = list.ToArray();
         }
     }

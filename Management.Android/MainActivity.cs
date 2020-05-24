@@ -80,7 +80,12 @@ namespace Management.Android
 
             var manager = new GridLayoutManager(this, 2);
 
-            recyclerView.SetLayoutManager(manager);
+
+
+
+
+
+
 
             mPhotoAlbum = new PhotoAlbum();
 
@@ -88,6 +93,9 @@ namespace Management.Android
 
             mAdapter.ItemClick += OnItemClick;
 
+            manager.SetSpanSizeLookup(new MySpanSizeLookup(mAdapter));
+
+            recyclerView.SetLayoutManager(manager);
             recyclerView.SetAdapter(mAdapter);
 
             UIHander uIHander = new UIHander(HandleiAction);
@@ -111,6 +119,20 @@ namespace Management.Android
         }
 
 
+        public class MySpanSizeLookup : GridLayoutManager.SpanSizeLookup
+        {
+            private PhotoAlbumAdapter mAdapter;
+
+            public MySpanSizeLookup(PhotoAlbumAdapter mAdapter)
+            {
+                this.mAdapter = mAdapter;
+            }
+
+            public override int GetSpanSize(int position)
+            {
+                return position == mAdapter.ItemCount - 1 ? 2 : 1;
+            }
+        }
 
 
         private void SetImage()
@@ -165,13 +187,12 @@ namespace Management.Android
         }
 
 
-        private void reUpdateView(int itemCount) {
-            
+        private void reUpdateView(int itemCount)
+        {
+
             RunOnUiThread(() =>
             {
                 mAdapter.NotifyItemRemoved(itemCount);
-                //mAdapter.NotifyItemChanged(0);
-                //mAdapter.NotifyItemChanged(idx);
                 mAdapter.NotifyDataSetChanged();
                 swipeRefreshLayout.Refreshing = false;
             });
@@ -223,8 +244,6 @@ namespace Management.Android
             Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
                 .SetAction("Action", (IOnClickListener)null).Show();
         }
-
-
 
         private class UIHander : Handler
         {

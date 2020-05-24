@@ -21,6 +21,11 @@ namespace Management.Android.Fragments
         PhotoAlbum mPhotoAlbum;
         RecyclerView.LayoutManager mLayoutManager;
 
+        // 普通布局
+        private const int TYPE_ITEM = 1;
+        // 脚布局
+        private const int TYPE_FOOTER = 2;
+
 
         public override int ItemCount => mPhotoAlbum.NumPhotos;
 
@@ -35,20 +40,47 @@ namespace Management.Android.Fragments
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            context = parent.Context;
-            View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PhotoCardView, parent, false);
+            if (viewType == TYPE_ITEM)
+            {
+                context = parent.Context;
+                View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PhotoCardView, parent, false);
+                PhotoViewHolder photoViewHolder = new PhotoViewHolder(itemView, OnClick);
+                return photoViewHolder;
+            }
+            else if (viewType == TYPE_FOOTER)
+            {
+                View view = LayoutInflater.From(parent.Context)
+                    .Inflate(Resource.Layout.layout_refresh_footer, parent, false);
+                return new FootViewHolder(view);
+            }
 
-            PhotoViewHolder photoViewHolder = new PhotoViewHolder(itemView, OnClick);
-            return photoViewHolder;
+            return null;
+
+
         }
 
 
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            PhotoViewHolder photoViewHolder = holder as PhotoViewHolder;
-            photoViewHolder.Image.SetImageResource(mPhotoAlbum[position].PhotoID);
-            photoViewHolder.Caption.Text = mPhotoAlbum[position].Caption;
+            if (holder is PhotoViewHolder)
+            {
+                PhotoViewHolder photoViewHolder = holder as PhotoViewHolder;
+                photoViewHolder.Image.SetImageResource(mPhotoAlbum[position].PhotoID);
+                photoViewHolder.Caption.Text = mPhotoAlbum[position].Caption;
+            }
+        }
+
+        public override int GetItemViewType(int position)
+        {
+            if (position + 1 == mPhotoAlbum.NumPhotos)
+            {
+                return TYPE_FOOTER;
+            }
+            else
+            {
+                return TYPE_ITEM;
+            }
         }
 
 
@@ -77,6 +109,15 @@ namespace Management.Android.Fragments
             itemView.Click += (sender, e) => listener(base.LayoutPosition);
         }
     }
+
+
+    public class FootViewHolder : RecyclerView.ViewHolder
+    {
+        public FootViewHolder(View itemView) : base(itemView)
+        {
+        }
+    }
+
 
     public class RecyclerViewOnScrollListtener : RecyclerView.OnScrollListener
     {
@@ -108,6 +149,10 @@ namespace Management.Android.Fragments
             }
 
         }
+
+
+
+
 
         private void StartAction()
         {
