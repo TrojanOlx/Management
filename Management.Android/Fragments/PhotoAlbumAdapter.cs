@@ -78,16 +78,19 @@ namespace Management.Android.Fragments
         }
     }
 
-    public class RecyclerViewOnScrollListtener : RecyclerView.OnScrollListener {
+    public class RecyclerViewOnScrollListtener : RecyclerView.OnScrollListener
+    {
 
         public delegate void LoadMoreEventHandler();
         private LoadMoreEventHandler LoadMoreEvent;
         private GridLayoutManager gridLayoutManager;
+        private readonly Handler handler;
 
-        public RecyclerViewOnScrollListtener(LoadMoreEventHandler loadMoreEvent, GridLayoutManager gridLayoutManager)
+        public RecyclerViewOnScrollListtener(LoadMoreEventHandler loadMoreEvent, GridLayoutManager gridLayoutManager, Handler handler)
         {
             LoadMoreEvent = loadMoreEvent;
             this.gridLayoutManager = gridLayoutManager;
+            this.handler = handler;
         }
 
         public override void OnScrolled(RecyclerView recyclerView, int dx, int dy)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Android;
 using Android.App;
 using Android.Content;
@@ -15,7 +16,6 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using Java.Lang;
 using Management.Android.Fragments;
 using Management.Android.Models;
 using Management.Android.UI;
@@ -39,6 +39,7 @@ namespace Management.Android
         private PhotoAlbumAdapter mAdapter;
         private SwipeRefreshLayout swipeRefreshLayout;
         private RoundImageView imagebutton;
+        private UIHander handler;
 
         private void Init()
         {
@@ -46,6 +47,7 @@ namespace Management.Android
             _mineFragment = new MineFragment();
             _listPageFragment = new ListPageFragment();
             _recyclerViewFragment = new RecyclerViewFragment();
+            handler = new UIHander(HandleiAction);
         }
 
 
@@ -88,8 +90,8 @@ namespace Management.Android
 
             recyclerView.SetAdapter(mAdapter);
 
-
-            recyclerView.AddOnScrollListener(new RecyclerViewOnScrollListtener(AddList, manager));
+            UIHander uIHander = new UIHander(HandleiAction);
+            recyclerView.AddOnScrollListener(new RecyclerViewOnScrollListtener(AddList, manager, uIHander));
 
             #endregion
 
@@ -101,34 +103,28 @@ namespace Management.Android
             imagebutton = FindViewById<RoundImageView>(Resource.Id.iv_userphoto_mycenter_myprofile);
             imagebutton.Click += Imagebutton_Click;
 
-            Handler handler = new Handler();
-            handler.Post(SetImage);
+            // 更新用户头像
+            ThreadPool.QueueUserWorkItem(q => SetImage());
 
-            
+
             Init();
         }
 
 
+
+
         private void SetImage()
         {
+            Thread.Sleep(2000);
             var imageBitmap = GetImageBitmapFromUrl("https://avatar.csdnimg.cn/A/4/F/3_kgcourage.jpg");
-            imagebutton.SetImageBitmap(imageBitmap);
+            RunOnUiThread(() =>
+            {
+                imagebutton.SetImageBitmap(imageBitmap);
+            });
         }
 
 
-        
 
-
-
-        private void AddList()
-        {
-            //Thread.Sleep(2000);
-            mPhotoAlbum.AddData();
-            mAdapter.NotifyDataSetChanged();
-            swipeRefreshLayout.Refreshing = false;
-            //mAdapter.NotifyItemRemoved(mAdapter.ItemCount);
-
-        }
 
         private void Imagebutton_Click(object sender, EventArgs e)
         {
@@ -155,14 +151,33 @@ namespace Management.Android
 
         private void SwipeRefreshLayout_Refresh(object sender, EventArgs e)
         {
-
-            mAdapter.NotifyItemRemoved(mAdapter.ItemCount);
-            int idx = mPhotoAlbum.RandomSwap();
-            //mAdapter.NotifyItemChanged(0);
-            //mAdapter.NotifyItemChanged(idx);
-            mAdapter.NotifyDataSetChanged();
-            swipeRefreshLayout.Refreshing = false;
+            ThreadPool.QueueUserWorkItem(q => ReDataList());
         }
+
+
+        private void ReDataList()
+        {
+            Thread.Sleep(2000);
+            var itemCount = mAdapter.ItemCount;
+            mPhotoAlbum.RandomSwap();
+
+            reUpdateView(itemCount);
+        }
+
+
+        private void reUpdateView(int itemCount) {
+            
+            RunOnUiThread(() =>
+            {
+                mAdapter.NotifyItemRemoved(itemCount);
+                //mAdapter.NotifyItemChanged(0);
+                //mAdapter.NotifyItemChanged(idx);
+                mAdapter.NotifyDataSetChanged();
+                swipeRefreshLayout.Refreshing = false;
+            });
+        }
+
+
 
         void OnItemClick(object sender, int position)
         {
@@ -207,6 +222,62 @@ namespace Management.Android
             View view = (View)sender;
             Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
                 .SetAction("Action", (IOnClickListener)null).Show();
+        }
+
+
+
+        private class UIHander : Handler
+        {
+            public delegate void UIAction(object obj);
+
+            private UIAction action;
+            public UIHander(UIAction action)
+            {
+                this.action = action;
+            }
+
+            public override void HandleMessage(Message msg)
+            {
+                action(msg.Obj);
+            }
+        }
+
+        private bool AddListFlag = true;
+
+        private void AddList()
+        {
+            if (AddListFlag)
+            {
+                AddListFlag = false;
+
+                ThreadPool.QueueUserWorkItem(p =>
+                {
+                    Thread.Sleep(2000);
+                    mPhotoAlbum.AddData();
+
+                    Message message = new Message()
+                    {
+                        Obj = "123"
+                    };
+                    handler.SendMessage(message);
+                });
+            }
+            //mAdapter.NotifyItemRemoved(mAdapter.ItemCount);
+        }
+
+
+        private void HandleiAction(object obj)
+        {
+            ThreadPool.QueueUserWorkItem(q =>
+            {
+                RunOnUiThread(() =>
+                {
+                    mAdapter.NotifyDataSetChanged();
+                    swipeRefreshLayout.Refreshing = false;
+                    AddListFlag = true;
+                });
+
+            });
         }
 
 
