@@ -71,6 +71,8 @@
     <Compile Include="Fragments\RecyclerViewFragment.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\Fruit.cs" />
+    <Compile Include="Models\FieldServer.cs" />
+    <Compile Include="Models\MaterialServer.cs" />
     <Compile Include="Models\PhotoAlbum.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
