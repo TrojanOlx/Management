@@ -21,6 +21,7 @@ namespace Management.Android.Fragments
         RecyclerView recyclerView;
 
         GridLayoutManager manager;
+        private PhotoAlbum mPhotoAlbum;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -37,7 +38,7 @@ namespace Management.Android.Fragments
 
             recyclerView.SetLayoutManager(manager);
 
-            var mPhotoAlbum = new PhotoAlbum();
+            mPhotoAlbum = new PhotoAlbum();
 
             mAdapter = new PhotoAlbumAdapter(mPhotoAlbum);
 

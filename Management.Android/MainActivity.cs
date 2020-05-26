@@ -71,6 +71,7 @@ namespace Management.Android
             //drawer.AddDrawerListener(toggle);
             //toggle.SyncState();
 
+
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
 
@@ -205,6 +206,12 @@ namespace Management.Android
             // Display a toast that briefly shows the enumeration of the selected photo:
             int photoNum = position + 1;
             Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
+
+            var item = mPhotoAlbum[position];
+            Intent intent = new Intent(this, typeof(FruitActivity));
+            intent.PutExtra(FruitActivity.FRUIT_NAME, item.Caption);
+            intent.PutExtra(FruitActivity.FRUIT_IMAGE_ID, item.PhotoID);
+            this.StartActivity(intent);
         }
 
 

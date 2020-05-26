@@ -18,7 +18,7 @@ namespace Management.Android.Fragments
     {
         public event EventHandler<int> ItemClick;
 
-        PhotoAlbum mPhotoAlbum;
+        readonly PhotoAlbum mPhotoAlbum;
         RecyclerView.LayoutManager mLayoutManager;
 
         // 普通布局

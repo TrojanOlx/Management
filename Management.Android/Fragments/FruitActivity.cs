@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
-using ActionBar = Android.Support.V7.App.ActionBar;
 using Com.Bumptech.Glide;
 using Android.Views;
+using Java.Lang;
+using AndroidResource = Android.Resource;
 
 namespace Management.Android.Fragments
 {
@@ -41,30 +34,40 @@ namespace Management.Android.Fragments
             
             SetSupportActionBar(toolbar);
 
-            ActionBar actionBar = SupportActionBar;
-            if (actionBar!=null)
-            {
-                actionBar.SetDisplayHomeAsUpEnabled(true);
-            }
+            // 添加返回键
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            
             collapsingToolbar.SetTitle(fruitName);
 
             Glide.With(this).Load(fruitImageId).Into(fruitImageView);
-            fruitContentText.Text = fruitName;
+            //Glide.With(this).AsBitmap().Load("").Into(fruitImageView);
+            fruitContentText.Text = Add500(fruitName);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
             {
-                case Android.Resource.Id.home:
+                case AndroidResource.Id.Home:
                     Finish();
                     return true;
                 default:
                     break;
             }
 
-
             return base.OnOptionsItemSelected(item);
+        }
+
+
+        private string Add500(string str)
+        {
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < 500; i++)
+            {
+                sb.Append($"{str}_");
+            }
+
+            return sb.ToString();
         }
     }
 }
