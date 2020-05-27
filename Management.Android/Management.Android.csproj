@@ -62,6 +62,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapter\ImageSliderAdapter.cs" />
     <Compile Include="Fragments\FruitActivity.cs" />
     <Compile Include="Fragments\FruitAdapter.cs" />
     <Compile Include="Fragments\ListPageFragment.cs" />
@@ -324,6 +325,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_fruit.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\image_slider_item.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
