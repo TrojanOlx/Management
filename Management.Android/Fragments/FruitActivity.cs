@@ -60,6 +60,16 @@ namespace Management.Android.Fragments
             });
 
 
+            //var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
+            //var row = new TableRow(this);
+            //var textView = new TextView(this);
+            //textView.Text = "标题";
+            //EditText editText = new EditText(this);
+            //editText.Text = "标题内容";
+            //row.AddView(textView,0);
+            //row.AddView(editText, 1);
+            //tableLayout.AddView(row);
+             
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
