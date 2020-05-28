@@ -11,6 +11,8 @@ using Android.Views;
 using Java.Lang;
 using Management.Android.Adapter;
 using AndroidResource = Android.Resource;
+using Android.Util;
+using Management.Android.Models;
 
 namespace Management.Android.Fragments
 {
@@ -48,7 +50,7 @@ namespace Management.Android.Fragments
 
             //Glide.With(this).Load(fruitImageId).Into(fruitImageView);
             //Glide.With(this).AsBitmap().Load("").Into(fruitImageView);
-            fruitContentText.Text = Add500(fruitName);
+            fruitContentText.Text = fruitName;//Add500(fruitName);
 
 
             var imageViewer = FindViewById<ViewPager>(Resource.Id.image_pager);
@@ -60,17 +62,72 @@ namespace Management.Android.Fragments
             });
 
 
-            //var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
-            //var row = new TableRow(this);
-            //var textView = new TextView(this);
-            //textView.Text = "标题";
-            //EditText editText = new EditText(this);
-            //editText.Text = "标题内容";
-            //row.AddView(textView,0);
-            //row.AddView(editText, 1);
-            //tableLayout.AddView(row);
-             
+            var mylinearLayout = FindViewById<LinearLayout>(Resource.Id.my_linearLayout);
+
+            FieldServer fieldServer = new FieldServer();
+            var list = fieldServer.GetFields();
+
+            foreach (var item in list)
+            {
+                var linearLayout = GetItemLinearLayout();
+                var textView = GetItemTextView(1);
+                var editView = GetItemEditText(3);
+
+                textView.Text = item.Name;
+                editView.Text = item.Name + "_" + item.Key;
+
+                linearLayout.AddView(textView, 0);
+                linearLayout.AddView(editView, 1);
+
+                mylinearLayout.AddView(linearLayout);
+            }
+
+
         }
+
+        /// <summary>
+        /// 获取基本的布局
+        /// </summary>
+        /// <returns></returns>
+        private LinearLayout GetItemLinearLayout()
+        {
+            // 布局
+            LinearLayout linearLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
+            linearLayout.LayoutParameters = lp;
+            linearLayout.Orientation = Orientation.Vertical;
+            return linearLayout;
+        }
+
+        /// <summary>
+        /// 获取标题布局
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <returns></returns>
+        private TextView GetItemTextView(int weight)
+        {
+            TextView textView = new TextView(this);
+            var lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WrapContent, weight);
+            lp.Gravity = GravityFlags.Center;
+            textView.LayoutParameters = lp;
+            textView.Gravity = GravityFlags.Center;
+            return textView;
+        }
+        /// <summary>
+        /// 获取编辑框
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <returns></returns>
+        private EditText GetItemEditText(int weight)
+        {
+            EditText editText = new EditText(this);
+            var lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WrapContent, weight);
+            editText.LayoutParameters = lp;
+            return editText;
+        }
+
+
+
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
