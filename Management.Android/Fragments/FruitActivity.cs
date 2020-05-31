@@ -13,6 +13,7 @@ using Management.Android.Adapter;
 using AndroidResource = Android.Resource;
 using Android.Util;
 using Management.Android.Models;
+using Android.Graphics;
 
 namespace Management.Android.Fragments
 {
@@ -28,7 +29,40 @@ namespace Management.Android.Fragments
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+
             SetContentView(Resource.Layout.activity_fruit);
+
+
+            var mylinearLayout = FindViewById<LinearLayout>(Resource.Id.my_linearLayout);
+
+            //var linearLayout = GetItemLinearLayout();
+            //linearLayout.SetBackgroundColor(Color.Blue);
+
+
+            FieldServer fieldServer = new FieldServer();
+            var list = fieldServer.GetFields();
+
+            foreach (var item in list)
+            {
+                var linearLayout = GetItemLinearLayout();
+                linearLayout.SetBackgroundResource(Resource.Drawable.border);
+
+                var textView = GetItemTextView(3);
+                var editView = GetItemEditText(1);
+
+                textView.Text = item.Name;
+                editView.Text = item.Name + "_" + item.Key;
+
+                linearLayout.AddView(textView);
+                linearLayout.AddView(editView);
+
+                mylinearLayout.AddView(linearLayout);
+            }
+
+
+
+
             var fruitName = Intent.GetStringExtra(FRUIT_NAME);
             var fruitImageId = Intent.GetIntExtra(FRUIT_IMAGE_ID, 0);
 
@@ -62,25 +96,7 @@ namespace Management.Android.Fragments
             });
 
 
-            var mylinearLayout = FindViewById<LinearLayout>(Resource.Id.my_linearLayout);
 
-            FieldServer fieldServer = new FieldServer();
-            var list = fieldServer.GetFields();
-
-            foreach (var item in list)
-            {
-                var linearLayout = GetItemLinearLayout();
-                var textView = GetItemTextView(1);
-                var editView = GetItemEditText(3);
-
-                textView.Text = item.Name;
-                editView.Text = item.Name + "_" + item.Key;
-
-                linearLayout.AddView(textView, 0);
-                linearLayout.AddView(editView, 1);
-
-                mylinearLayout.AddView(linearLayout);
-            }
 
 
         }
@@ -93,9 +109,10 @@ namespace Management.Android.Fragments
         {
             // 布局
             LinearLayout linearLayout = new LinearLayout(this);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
+            lp.TopMargin = 5;
             linearLayout.LayoutParameters = lp;
-            linearLayout.Orientation = Orientation.Vertical;
+            linearLayout.Orientation = Orientation.Horizontal;
             return linearLayout;
         }
 
@@ -107,7 +124,7 @@ namespace Management.Android.Fragments
         private TextView GetItemTextView(int weight)
         {
             TextView textView = new TextView(this);
-            var lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WrapContent, weight);
+            var lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent, weight);
             lp.Gravity = GravityFlags.Center;
             textView.LayoutParameters = lp;
             textView.Gravity = GravityFlags.Center;
@@ -121,7 +138,7 @@ namespace Management.Android.Fragments
         private EditText GetItemEditText(int weight)
         {
             EditText editText = new EditText(this);
-            var lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WrapContent, weight);
+            var lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent, weight);
             editText.LayoutParameters = lp;
             return editText;
         }
