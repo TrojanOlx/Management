@@ -24,7 +24,7 @@ namespace Management.Android.Fragments
 
         public const string FRUIT_IMAGE_ID = "fruit_image_id";
 
-
+        private List<EditText> editTexts = new List<EditText>();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -51,12 +51,18 @@ namespace Management.Android.Fragments
                 var textView = GetItemTextView(3);
                 var editView = GetItemEditText(1);
 
+                //textView.SetBackgroundResource(Resource.Drawable.border);
+                //editView.SetBackgroundResource(Resource.Drawable.border);
+
                 textView.Text = item.Name;
                 editView.Text = item.Name + "_" + item.Key;
+                editView.Enabled = false;
+
 
                 linearLayout.AddView(textView);
                 linearLayout.AddView(editView);
 
+                editTexts.Add(editView);
                 mylinearLayout.AddView(linearLayout);
             }
 
@@ -98,8 +104,30 @@ namespace Management.Android.Fragments
 
 
 
-
+            var enableEdits = FindViewById<FloatingActionButton>(Resource.Id.enable_edit);
+            enableEdits.Click += delegate
+            {
+                editTexts.ForEach(f =>
+                {
+                    f.Enabled = !f.Enabled;
+                });
+            };
         }
+
+
+        /// <summary>
+        /// 设置状态栏
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <returns></returns>
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.toolbar, menu);
+            return true;
+        }
+
+
+
 
         /// <summary>
         /// 获取基本的布局
@@ -152,12 +180,21 @@ namespace Management.Android.Fragments
             {
                 case AndroidResource.Id.Home:
                     Finish();
-                    return true;
+                    break;
+                case Resource.Id.Material_Edit:
+                    Toast.MakeText(this, "Edit", ToastLength.Short).Show();
+                    break;
+                case Resource.Id.Material_Save:
+                    Toast.MakeText(this, "Save", ToastLength.Short).Show();
+                    break;
+                case Resource.Id.Material_Delete:
+                    Toast.MakeText(this, "Delete", ToastLength.Short).Show();
+                    break;
                 default:
                     break;
             }
 
-            return base.OnOptionsItemSelected(item);
+            return true;
         }
 
 

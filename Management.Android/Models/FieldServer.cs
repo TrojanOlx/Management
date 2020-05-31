@@ -42,6 +42,15 @@ namespace Management.Android.Models
             fields.Add(new Field(1,"编号","id"));
             fields.Add(new Field(2, "名称", "name"));
             fields.Add(new Field(1, "备注", "remark"));
+            fields.Add(new Field(1, "编号", "id"));
+            fields.Add(new Field(2, "名称", "name"));
+            fields.Add(new Field(1, "备注", "remark"));
+            fields.Add(new Field(1, "编号", "id"));
+            fields.Add(new Field(2, "名称", "name"));
+            fields.Add(new Field(1, "备注", "remark"));
+            fields.Add(new Field(1, "编号", "id"));
+            fields.Add(new Field(2, "名称", "name"));
+            fields.Add(new Field(1, "备注", "remark"));
 
             Fields = fields;
             return fields;

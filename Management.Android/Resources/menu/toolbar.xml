@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/Material_Edit"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="编辑"
+        android:showAsAction="always"/>
+    <item
+        android:id="@+id/Material_Save"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="保存"
+        android:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/Material_Delete"
+        android:icon="@drawable/ic_menu_slideshow"
+        android:title="删除" />
+</menu>
