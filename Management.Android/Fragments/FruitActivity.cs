@@ -172,7 +172,7 @@ namespace Management.Android.Fragments
         }
 
 
-
+        private bool IsEdit = true;
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
@@ -181,11 +181,26 @@ namespace Management.Android.Fragments
                 case AndroidResource.Id.Home:
                     Finish();
                     break;
-                case Resource.Id.Material_Edit:
+                case Resource.Id.Material_Edit_Save:
+                    if (IsEdit)
+                    {
+                        item.SetIcon(Resource.Drawable.baocun);
+                        IsEdit = !IsEdit;
+                        editTexts.ForEach(f =>
+                        {
+                            f.Enabled = !f.Enabled;
+                        });
+                    }
+                    else
+                    {
+                        item.SetIcon(Resource.Drawable.bianji);
+                        IsEdit = !IsEdit;
+                        editTexts.ForEach(f =>
+                        {
+                            f.Enabled = !f.Enabled;
+                        });
+                    }
                     Toast.MakeText(this, "Edit", ToastLength.Short).Show();
-                    break;
-                case Resource.Id.Material_Save:
-                    Toast.MakeText(this, "Save", ToastLength.Short).Show();
                     break;
                 case Resource.Id.Material_Delete:
                     Toast.MakeText(this, "Delete", ToastLength.Short).Show();
