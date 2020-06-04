@@ -14,6 +14,7 @@ using AndroidResource = Android.Resource;
 using Android.Util;
 using Management.Android.Models;
 using Android.Graphics;
+using Android.Support.V7.View.Menu;
 
 namespace Management.Android.Fragments
 {
@@ -190,6 +191,7 @@ namespace Management.Android.Fragments
                         {
                             f.Enabled = !f.Enabled;
                         });
+                        
                     }
                     else
                     {
