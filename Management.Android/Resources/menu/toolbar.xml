@@ -4,17 +4,13 @@
       xmlns:tools="http://schemas.android.com/tools"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/Material_Edit"
-        android:icon="@drawable/ic_menu_camera"
+        android:id="@+id/Material_Edit_Save"
         android:title="编辑"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/Material_Save"
-        android:icon="@drawable/ic_menu_gallery"
-        android:title="保存"
+        android:icon="@drawable/bianji"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/Material_Delete"
-        android:icon="@drawable/ic_menu_slideshow"
-        app:title="删除" />
+        android:icon="@drawable/shanchu"
+        android:title="删除"
+        app:showAsAction="ifRoom"/>
 </menu>
