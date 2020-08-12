@@ -1,9 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Management.Api.Models.GoodsModel;
+﻿using Management.Models.GoodsModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Api.Models
 {

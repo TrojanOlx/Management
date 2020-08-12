@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Management.Api.Models.GoodsModel
+namespace Management.Models.GoodsModel
 {
     /// <summary>
     /// 物品扩展属性

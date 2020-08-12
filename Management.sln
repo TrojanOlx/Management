@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.Android", "Management.Android\Management.Android.csproj", "{68D77072-7030-4361-ADFA-9F5E10313026}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.Api", "Management.Api\Management.Api.csproj", "{A7E4EEA1-802B-4AC6-B5AE-39404C5BD1C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.Api", "Management.Api\Management.Api.csproj", "{A7E4EEA1-802B-4AC6-B5AE-39404C5BD1C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.Models", "Management.Models\Management.Models.csproj", "{08D6DEA1-EE26-4576-A4B6-79625D99BB65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{A7E4EEA1-802B-4AC6-B5AE-39404C5BD1C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7E4EEA1-802B-4AC6-B5AE-39404C5BD1C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7E4EEA1-802B-4AC6-B5AE-39404C5BD1C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08D6DEA1-EE26-4576-A4B6-79625D99BB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D6DEA1-EE26-4576-A4B6-79625D99BB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D6DEA1-EE26-4576-A4B6-79625D99BB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D6DEA1-EE26-4576-A4B6-79625D99BB65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Management.Api.Models.GoodsModel
+namespace Management.Models.GoodsModel
 {
-    /// <summary>
-    /// 物品扩展属性模板
-    /// </summary>
-    public class GoodsExtendFieldTemplate
+    public class Goods
     {
         /// <summary>
-        /// id
+        /// 物品编号
         /// </summary>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
-        /// 扩展字段(使用[,]分割)
+        /// 物品名称
         /// </summary>
-        public string GoodsExtendFields { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// 创建人
         /// </summary>
@@ -34,5 +29,13 @@ namespace Management.Api.Models.GoodsModel
         /// 最后更新时间
         /// </summary>
         public DateTime LastUpdateTime { get; set; }
+        /// <summary>
+        /// 物品图片
+        /// </summary>
+        public ICollection<GoodsImage> GoodsImages { get; set; }
+        /// <summary>
+        /// 扩展属性
+        /// </summary>
+        public ICollection<GoodsExtendAttribute> GoodsExtendAttributes { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Management.Api.Models.GoodsModel
+namespace Management.Models.GoodsModel
 {
     public class GoodsImage
     {

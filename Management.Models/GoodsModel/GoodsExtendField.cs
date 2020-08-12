@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Management.Api.Models.GoodsModel
+namespace Management.Models.GoodsModel
 {
     /// <summary>
     /// 物品额外字段
