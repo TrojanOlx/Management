@@ -9,6 +9,10 @@ namespace Management.Api.Models.GoodsModel
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
+        /// 物品Id
+        /// </summary>
+        public Guid GoodsId { get; set; }
+        /// <summary>
         /// 后缀名
         /// </summary>
         public string Extension { get; set; }
@@ -24,6 +28,11 @@ namespace Management.Api.Models.GoodsModel
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// 物品
+        /// </summary>
+        public virtual Goods Goods { get; set; }
 
         /// <summary>
         /// 获取图片

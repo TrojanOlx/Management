@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Management.Api.Models.GoodsModel
 {
+    /// <summary>
+    /// 物品额外字段
+    /// </summary>
     public class GoodsExtendField
     {
         /// <summary>
@@ -11,11 +15,19 @@ namespace Management.Api.Models.GoodsModel
         /// <summary>
         /// 字段名称
         /// </summary>
-        public string FieldName { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// 字段Key
         /// </summary>
-        public string FieldKey { get; set; }
+        public string Key { get; set; }
+        /// <summary>
+        /// 数据类型
+        /// </summary>
+        public ExtendFieldDateType DateType { get; set; }
+        /// <summary>
+        /// 字段提示
+        /// </summary>
+        public string Hint { get; set; }
         /// <summary>
         /// 创建人
         /// </summary>
@@ -33,5 +45,17 @@ namespace Management.Api.Models.GoodsModel
         /// </summary>
         public DateTime LastUpdateTime { get; set; }
 
+        /// <summary>
+        /// 物品扩展属性
+        /// </summary>
+        public ICollection<GoodsExtendAttribute> GoodsExtendAttributes { get; set; }
+    }
+
+    public enum ExtendFieldDateType
+    {
+        Int,
+        Double,
+        String,
+        Select
     }
 }
