@@ -64,6 +64,9 @@ namespace Management.Api.Models
                     .HasForeignKey(key => key.GoodsId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+
+
+            //启用Guid主键类型扩展
             base.OnModelCreating(builder);
         }
     }

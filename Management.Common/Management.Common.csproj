@@ -8,8 +8,4 @@
     <PackageReference Include="Snowflake.Core" Version="2.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Management.Common\Management.Common.csproj" />
-  </ItemGroup>
-
 </Project>

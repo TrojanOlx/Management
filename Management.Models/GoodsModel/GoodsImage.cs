@@ -11,7 +11,7 @@ namespace Management.Models.GoodsModel
         /// <summary>
         /// 物品Id
         /// </summary>
-        public Guid GoodsId { get; set; }
+        public long? GoodsId { get; set; }
         /// <summary>
         /// 后缀名
         /// </summary>

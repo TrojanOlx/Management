@@ -1,14 +1,22 @@
-﻿using System;
+﻿using Management.Common.Models;
+using Snowflake.Core;
+using System;
 using System.Collections.Generic;
 
 namespace Management.Models.GoodsModel
 {
     public class Goods
     {
+        public Goods(string name)
+        {
+            Name = name;
+            Id = GetSnowflakeId.Worker.NextId();
+        }
+
         /// <summary>
         /// 物品编号
         /// </summary>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         /// <summary>
         /// 物品名称
         /// </summary>
