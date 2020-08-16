@@ -12,7 +12,8 @@ namespace Management.Api.Migrations
                 name: "Goods",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     CreateUser = table.Column<string>(nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
@@ -65,7 +66,7 @@ namespace Management.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    GoodsId = table.Column<Guid>(nullable: false),
+                    GoodsId = table.Column<long>(nullable: true),
                     Extension = table.Column<string>(nullable: true),
                     LocalName = table.Column<string>(nullable: true),
                     CreateUser = table.Column<string>(nullable: true),
@@ -87,7 +88,7 @@ namespace Management.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    GoodsId = table.Column<Guid>(nullable: false),
+                    GoodsId = table.Column<long>(nullable: false),
                     GoodsExtendFieldId = table.Column<Guid>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },

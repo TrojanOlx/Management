@@ -21,11 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Management.Common\Management.Common.csproj" />
     <ProjectReference Include="..\Management.Models\Management.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\GoodsExtendFieldTask\" />
   </ItemGroup>
 
 

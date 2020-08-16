@@ -17,11 +17,11 @@ namespace Management.Api.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Management.Api.Models.GoodsModel.Goods", b =>
+            modelBuilder.Entity("Management.Models.GoodsModel.Goods", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
@@ -43,7 +43,7 @@ namespace Management.Api.Migrations
                     b.ToTable("Goods");
                 });
 
-            modelBuilder.Entity("Management.Api.Models.GoodsModel.GoodsExtendAttribute", b =>
+            modelBuilder.Entity("Management.Models.GoodsModel.GoodsExtendAttribute", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,8 +52,8 @@ namespace Management.Api.Migrations
                     b.Property<Guid>("GoodsExtendFieldId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                    b.Property<long>("GoodsId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Value")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -67,7 +67,7 @@ namespace Management.Api.Migrations
                     b.ToTable("GoodsExtendAttributes");
                 });
 
-            modelBuilder.Entity("Management.Api.Models.GoodsModel.GoodsExtendField", b =>
+            modelBuilder.Entity("Management.Models.GoodsModel.GoodsExtendField", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -102,7 +102,7 @@ namespace Management.Api.Migrations
                     b.ToTable("GoodsExtendFields");
                 });
 
-            modelBuilder.Entity("Management.Api.Models.GoodsModel.GoodsExtendFieldTemplate", b =>
+            modelBuilder.Entity("Management.Models.GoodsModel.GoodsExtendFieldTemplate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace Management.Api.Migrations
                     b.ToTable("GoodsExtendFieldTemplates");
                 });
 
-            modelBuilder.Entity("Management.Api.Models.GoodsModel.GoodsImage", b =>
+            modelBuilder.Entity("Management.Models.GoodsModel.GoodsImage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,8 +143,8 @@ namespace Management.Api.Migrations
                     b.Property<string>("Extension")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid>("GoodsId")
-                        .HasColumnType("char(36)");
+                    b.Property<long?>("GoodsId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("LocalName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -156,28 +156,27 @@ namespace Management.Api.Migrations
                     b.ToTable("GoodsImages");
                 });
 
-            modelBuilder.Entity("Management.Api.Models.GoodsModel.GoodsExtendAttribute", b =>
+            modelBuilder.Entity("Management.Models.GoodsModel.GoodsExtendAttribute", b =>
                 {
-                    b.HasOne("Management.Api.Models.GoodsModel.GoodsExtendField", "GoodsExtendField")
+                    b.HasOne("Management.Models.GoodsModel.GoodsExtendField", "GoodsExtendField")
                         .WithMany("GoodsExtendAttributes")
                         .HasForeignKey("GoodsExtendFieldId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Management.Api.Models.GoodsModel.Goods", "Goods")
+                    b.HasOne("Management.Models.GoodsModel.Goods", "Goods")
                         .WithMany("GoodsExtendAttributes")
                         .HasForeignKey("GoodsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Management.Api.Models.GoodsModel.GoodsImage", b =>
+            modelBuilder.Entity("Management.Models.GoodsModel.GoodsImage", b =>
                 {
-                    b.HasOne("Management.Api.Models.GoodsModel.Goods", "Goods")
+                    b.HasOne("Management.Models.GoodsModel.Goods", "Goods")
                         .WithMany("GoodsImages")
                         .HasForeignKey("GoodsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

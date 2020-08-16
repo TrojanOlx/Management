@@ -53,7 +53,7 @@ namespace Management.Models.GoodsModel
 
     public enum ExtendFieldDateType
     {
-        Int,
+        Int = 1,
         Double,
         String,
         Select

@@ -19,7 +19,7 @@ namespace Management.Api.Features.GoodsTask
         public class AddGoodsCommand : IRequest<bool>
         {
             public string Name { get; set; }
-            public Dictionary<string, string> ExtendValues { get; set; }
+            public Dictionary<string, object> ExtendValues { get; set; }
         }
 
 
@@ -41,32 +41,27 @@ namespace Management.Api.Features.GoodsTask
                 var goods = new Goods(request.Name);
                 goods.CreateTime = DateTime.Now;
                 // TODO: User
-                goods.CreateUser = "";
+                goods.CreateUser = _httpContext.HttpContext.User.Claims.FirstOrDefault(f => f.Type == "UserName").Value;
                 goods.LastUpdateTime = DateTime.Now;
                 // TODO: User
                 goods.LastUpdateUser = "";
 
 
-                var ImageIds = JsonConvert.DeserializeObject<List<Guid>>(request.ExtendValues["images"]);
-
-
+                var ImageIds = JsonConvert.DeserializeObject<List<Guid>>(request.ExtendValues["images"].ToString());
 
                 var keys = request.ExtendValues.Keys;
                 var extendFields = _managementContext.GoodsExtendFields.Where(w => keys.Contains(w.Key));
                 List<GoodsExtendAttribute> extendAttributes = new List<GoodsExtendAttribute>();
                 foreach (var extendField in extendFields)
                 {
-                    if (extendField.DateType == ExtendFieldDateType.Select)
-                    {
-
-                    }
-                    else
+                    string value = request.ExtendValues[extendField.Key]?.ToString();
+                    if (!string.IsNullOrEmpty(value))
                     {
                         extendAttributes.Add(new GoodsExtendAttribute
                         {
                             GoodsId = goods.Id,
                             GoodsExtendFieldId = extendField.Id,
-                            Value = request.ExtendValues[extendField.Key]
+                            Value = value
                         });
                     }
                 }
