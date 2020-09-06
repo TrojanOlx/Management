@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using Android;
 using Android.App;
 using Android.Content;
@@ -16,9 +17,13 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using Autofac;
+using Management.Android.Controllers;
 using Management.Android.Fragments;
 using Management.Android.Models;
 using Management.Android.UI;
+using MediatR;
+using Xamarin.Essentials;
 using static Android.Views.View;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Uri = Android.Net.Uri;
@@ -41,8 +46,16 @@ namespace Management.Android
         private RoundImageView imagebutton;
         private UIHander handler;
 
+        private AuthorizationTask authorizationTask;
+        public MainActivity()
+        {
+            authorizationTask = App.Container.Resolve<AuthorizationTask>();   
+        }
+        
         private void Init()
         {
+            var aa = authorizationTask.Login("Trojan","Trojan").GetAwaiter().GetResult();
+
             _homeFragment = new HomeFragment();
             _mineFragment = new MineFragment();
             _listPageFragment = new ListPageFragment();
@@ -51,7 +64,7 @@ namespace Management.Android
         }
 
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -269,6 +282,8 @@ namespace Management.Android
         }
 
         private bool AddListFlag = true;
+
+        
 
         private void AddList()
         {
