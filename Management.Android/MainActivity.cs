@@ -49,12 +49,25 @@ namespace Management.Android
         private AuthorizationTask authorizationTask;
         public MainActivity()
         {
-            authorizationTask = App.Container.Resolve<AuthorizationTask>();   
+            authorizationTask = App.Container.Resolve<AuthorizationTask>();
         }
-        
+
         private void Init()
         {
-            var aa = authorizationTask.Login("Trojan","Trojan").GetAwaiter().GetResult();
+
+            new Thread(async T =>
+            {
+                var message = await authorizationTask.Login("Trojan", "Trojan");
+                RunOnUiThread(() =>
+                {
+
+                    Toast.MakeText(this, "*********************************************", ToastLength.Long).Show();
+
+                    Toast.MakeText(this, "*********************************************", ToastLength.Long).Show();
+                    Toast.MakeText(this, message, ToastLength.Long).Show();
+                });
+
+            }).Start();
 
             _homeFragment = new HomeFragment();
             _mineFragment = new MineFragment();
@@ -164,6 +177,10 @@ namespace Management.Android
 
         private void Imagebutton_Click(object sender, EventArgs e)
         {
+
+            Intent intent = new Intent(this, typeof(LoginActivity));
+            StartActivity(intent);
+
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.OpenDrawer(GravityCompat.Start);
         }
@@ -283,7 +300,7 @@ namespace Management.Android
 
         private bool AddListFlag = true;
 
-        
+
 
         private void AddList()
         {

@@ -25,7 +25,7 @@ namespace Management.Android.Controllers
 
         private readonly string ClientId;
         private readonly string ClientSecret;
-        public AuthorizationTask(string clientId,string clientSecret)
+        public AuthorizationTask(string clientId, string clientSecret)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -47,29 +47,28 @@ namespace Management.Android.Controllers
         public async Task<string> Login(string userName, string passWord)
         {
 
-            ThreadPool.QueueUserWorkItem(async q =>
+
+            var client = new HttpClient();
+
+            var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
             {
-                var client = new HttpClient();
-
-                var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
-                {
-                    Address = document.TokenEndpoint,
-                    ClientId = ClientId,
-                    ClientSecret = ClientSecret,
-                    UserName = userName,
-                    Password = passWord,
-                    Scope = "TrojanApi offline_access openid profile",
-                });
-
-                if (tokenResponse.IsError)
-                {
-                    //return tokenResponse.Error;
-                }
-
-                Preferences.Set(AuthorizationConsts.AccessToken, tokenResponse.AccessToken);
-                Preferences.Set(AuthorizationConsts.RefreshToken, tokenResponse.RefreshToken);
-                Preferences.Set(AuthorizationConsts.Raw, tokenResponse.Raw);
+                Address = document.TokenEndpoint,
+                ClientId = ClientId,
+                ClientSecret = ClientSecret,
+                UserName = userName,
+                Password = passWord,
+                Scope = "TrojanApi offline_access openid profile",
             });
+
+            if (tokenResponse.IsError)
+            {
+                return tokenResponse.Error;
+            }
+
+            Preferences.Set(AuthorizationConsts.AccessToken, tokenResponse.AccessToken);
+            Preferences.Set(AuthorizationConsts.RefreshToken, tokenResponse.RefreshToken);
+            Preferences.Set(AuthorizationConsts.Raw, tokenResponse.Raw);
+
             return "登录成功";
         }
 
@@ -87,7 +86,7 @@ namespace Management.Android.Controllers
 
             if (tokenResponse.IsError)
             {
-                
+
             }
 
             Preferences.Set(AuthorizationConsts.AccessToken, tokenResponse.AccessToken);
