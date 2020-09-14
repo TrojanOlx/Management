@@ -44,11 +44,12 @@ namespace Management.Android.Controllers
             }).GetAwaiter().GetResult();
         }
 
-        public async Task<string> Login(string userName, string passWord)
+        public async Task<TokenResponse> Login(string userName, string passWord)
         {
 
 
             var client = new HttpClient();
+
 
             var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
             {
@@ -59,23 +60,11 @@ namespace Management.Android.Controllers
                 Password = passWord,
                 Scope = "TrojanApi offline_access openid profile",
             });
-
-            if (tokenResponse.IsError)
-            {
-                return tokenResponse.Error;
-            }
-
-            Preferences.Set(AuthorizationConsts.AccessToken, tokenResponse.AccessToken);
-            Preferences.Set(AuthorizationConsts.RefreshToken, tokenResponse.RefreshToken);
-            Preferences.Set(AuthorizationConsts.Raw, tokenResponse.Raw);
-
-            return "登录成功";
+            return tokenResponse;
         }
 
-        public async Task RefreshToken()
+        public async Task<TokenResponse> RefreshToken(string refreshToken)
         {
-            var refreshToken = Preferences.Get(AuthorizationConsts.RefreshToken, null);
-
             var tokenResponse = await _httpClient.RequestRefreshTokenAsync(new RefreshTokenRequest
             {
                 Address = document.TokenEndpoint,
@@ -84,15 +73,8 @@ namespace Management.Android.Controllers
                 RefreshToken = refreshToken
             });
 
-            if (tokenResponse.IsError)
-            {
 
-            }
-
-            Preferences.Set(AuthorizationConsts.AccessToken, tokenResponse.AccessToken);
-            Preferences.Set(AuthorizationConsts.RefreshToken, tokenResponse.RefreshToken);
-            Preferences.Set(AuthorizationConsts.Raw, tokenResponse.Raw);
-
+            return tokenResponse;
         }
 
     }

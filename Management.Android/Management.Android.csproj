@@ -68,6 +68,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Controllers\AuthorizationConsts.cs" />
     <Compile Include="Controllers\AuthorizationTask.cs" />
+    <Compile Include="Fragments\BaseActivity.cs" />
     <Compile Include="Fragments\FruitActivity.cs" />
     <Compile Include="Fragments\FruitAdapter.cs" />
     <Compile Include="Fragments\ListPageFragment.cs" />

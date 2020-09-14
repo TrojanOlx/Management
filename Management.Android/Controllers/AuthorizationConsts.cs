@@ -18,5 +18,7 @@ namespace Management.Android.Controllers
         public const string AccessToken = "AccessToken";
         public const string RefreshToken = "RefreshToken";
         public const string Raw = "Raw";
+        public const string ExpiresIn = "ExpiresIn";
     }
+    
 }

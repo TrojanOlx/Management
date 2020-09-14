@@ -31,7 +31,7 @@ using Uri = Android.Net.Uri;
 namespace Management.Android
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
+    public class MainActivity : BaseActivity, NavigationView.IOnNavigationItemSelectedListener
     {
 
         private HomeFragment _homeFragment;
@@ -46,29 +46,10 @@ namespace Management.Android
         private RoundImageView imagebutton;
         private UIHander handler;
 
-        private AuthorizationTask authorizationTask;
-        public MainActivity()
-        {
-            authorizationTask = App.Container.Resolve<AuthorizationTask>();
-        }
+
 
         private void Init()
         {
-
-            new Thread(async T =>
-            {
-                var message = await authorizationTask.Login("Trojan", "Trojan");
-                RunOnUiThread(() =>
-                {
-
-                    Toast.MakeText(this, "*********************************************", ToastLength.Long).Show();
-
-                    Toast.MakeText(this, "*********************************************", ToastLength.Long).Show();
-                    Toast.MakeText(this, message, ToastLength.Long).Show();
-                });
-
-            }).Start();
-
             _homeFragment = new HomeFragment();
             _mineFragment = new MineFragment();
             _listPageFragment = new ListPageFragment();
@@ -76,14 +57,15 @@ namespace Management.Android
             handler = new UIHander(HandleiAction);
         }
 
+        static bool enableLogin = false;
 
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-
-
-
             SetContentView(Resource.Layout.activity_main);
 
             //var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
@@ -143,8 +125,8 @@ namespace Management.Android
 
 
             Init();
-        }
 
+        }
 
         public class MySpanSizeLookup : GridLayoutManager.SpanSizeLookup
         {
@@ -177,10 +159,6 @@ namespace Management.Android
 
         private void Imagebutton_Click(object sender, EventArgs e)
         {
-
-            Intent intent = new Intent(this, typeof(LoginActivity));
-            StartActivity(intent);
-
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.OpenDrawer(GravityCompat.Start);
         }
@@ -385,6 +363,11 @@ namespace Management.Android
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public override void InitData()
+        {
+
         }
     }
 }
